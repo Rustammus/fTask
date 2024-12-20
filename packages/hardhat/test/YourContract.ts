@@ -14,15 +14,15 @@ describe("YourContract", function () {
   });
 
   describe("Deployment", function () {
-    it("Should have the right message on deploy", async function () {
-      expect(await yourContract.greeting()).to.equal("Building Unstoppable Apps!!!");
+    // Test if voiting not active on start
+    it("Should voitingActive equal false on deploy", async function () {
+      expect(await yourContract.votingActive()).to.equal(false);
     });
 
-    it("Should allow setting a new message", async function () {
-      const newGreeting = "Learn Scaffold-ETH 2! :)";
-
-      await yourContract.setGreeting(newGreeting);
-      expect(await yourContract.greeting()).to.equal(newGreeting);
+    // Test giveRightToVote
+    it("Should add weight to voiter", async function () {
+      await yourContract.giveRightToVote("0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
+      expect((await yourContract.voters("0x70997970C51812dc3A010C7d01b50e0d17dc79C8")).weight).to.equal(1);
     });
   });
 });
